@@ -1,6 +1,5 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 
 app = Flask(__name__)
 				
@@ -16,8 +15,7 @@ app.app_context().push()
 class Employee(db.Model):						
     sno = db.Column(db.Integer, primary_key = True)			
     name = db.Column(db.String(200), nullable = False)			
-    address = db.Column(db.String(500), nullable = False)		
-    joined_date = db.Column(db.DateTime, default=datetime.utcnow)	
+    email = db.Column(db.String(500), nullable = False)		
 
     def __repr__(self):
         return f"{self.sno} - {self.name}"
@@ -25,12 +23,16 @@ class Employee(db.Model):
 
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def hello_world():
-    employee = Employee(name = "Employee Name", address = "Employee Address")   
-    db.session.add(employee)
-    db.session.commit()
-    allemployee = Employee.query.all()				
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        employee = Employee(name=name, email=email)
+        db.session.add(employee)
+        db.session.commit()
+
+    allemployee = Employee.query.all()
     return render_template("index.html", allemployee=allemployee)
 
 @app.route("/about")
