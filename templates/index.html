@@ -46,6 +46,15 @@
           <th scope="col">S.no</th>
           <th scope="col">Name</th>
           <th scope="col">Email-Id</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in allemployee %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{i.name}}</td>
+          <td>{{i.email}}</td>
           <th scope="col">
             <td>
             <a
@@ -62,14 +71,6 @@
             >
           </td>
           </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for i in allemployee %}
-        <tr>
-          <th scope="row">{{loop.index}}</th>
-          <td>{{i.name}}</td>
-          <td>{{i.email}}</td>
         </tr>
         {% endfor %}
       </tbody>

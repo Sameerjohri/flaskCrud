@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -48,4 +48,13 @@ def display():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)			
+    app.run(debug=True)		
+
+
+
+@app.route("/delete/<int:sno>")
+def delete(sno):
+    employee = Employee.query.filter_by(sno=sno).first()
+    db.session.delete(employee)
+    db.session.commit()
+    return redirect("/")
