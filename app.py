@@ -58,3 +58,7 @@ def delete(sno):
     db.session.delete(employee)
     db.session.commit()
     return redirect("/")
+
+@app.route("/update/<int:sno>")
+def update(sno):
+    pass
